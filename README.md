@@ -4,7 +4,7 @@
 
 **Author:** Kevin Williams  
 **Version:** 1.0 | February 2025  
-**Status:** DRAFT
+**Status:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19024421.svg)](https://doi.org/10.5281/zenodo.19024421)
 
 ---
 
