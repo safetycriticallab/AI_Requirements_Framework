@@ -187,5 +187,4 @@ DRAFT — Not yet released for public distribution.
 ## Contact
 
 **Kevin Williams**  
-Software Engineer, Barrios Technology (supporting NASA Johnson Space Center)  
-M.S. Artificial Intelligence Candidate, University of Michigan
+kevin.williams@safetycriticallabs.com
