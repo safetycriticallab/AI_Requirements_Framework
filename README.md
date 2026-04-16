@@ -3,7 +3,7 @@
 > Requirements and Verification Standards for Artificial Intelligence in Safety-Critical Applications
 
 **Issuing Authority:** Safety Critical Labs | AI Certification Authority
-**Version:** 1.0 | February 2025
+**Version:** 2.1.1 | April 2026
 **Status:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19024421.svg)](https://doi.org/10.5281/zenodo.19024421)
 
 ---
