@@ -1,9 +1,11 @@
+<!-- STAGED FOR v3.5 RELEASE. Do not push to GitHub or update the Zenodo record until the v3.5 deposit is published (held pending the Scientific Reports decision; the concept DOI resolves to the latest version). v3.4 was not separately deposited; its changes publish with v3.5. Canonical copy maintained at Critical Labs/other/README.md. -->
+
 # AI Requirements Framework for Safety-Critical Systems
 
 > Requirements and Verification Standards for Artificial Intelligence in Safety-Critical Applications
 
 **Issuing Authority:** Safety Critical Labs | AI Certification Authority
-**Version:** 3.4 | July 2026
+**Version:** 3.5 | July 2026
 **Status:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19024420.svg)](https://doi.org/10.5281/zenodo.19024420)
 
 > The DOI above is the Concept DOI and always resolves to the most recent deposited version on Zenodo. Each release receives its own version DOI; cite the Concept DOI unless you need to pin a specific version.
@@ -20,10 +22,20 @@ The framework is organized into two tiers. Section 2 contains ten algorithm-agno
 
 ---
 
+## What's New in v3.5
+
+- **AI-1.9 pointer corrected: "host standard" replaced with *system safety process*.** The hazard-analysis requirement previously invoked "the applicable host standard" — an undefined term that resolved to the software standard the framework overlays (DO-178C, NPR 7150.2D, ISO 26262-6). Those standards *consume* hazard-analysis outputs to determine software criticality; they do not conduct the analysis. The requirement, rationale, and verification now name the project's **system safety process**: the system-level process that actually produces the hazard analysis (e.g., SAE ARP4754/ARP4761 safety assessment in civil aviation, ISO 26262-3 hazard analysis and risk assessment, ISO 14971 risk management for medical devices, MIL-STD-882E system safety, or the NASA safety program's hazard analysis process, from which NASA-STD-8739.8 derives software safety criticality). The accepted analysis methods are unchanged (FMEA, FMECA, FTA, STPA, or PRA per applicable domain practice).
+- **New glossary entry: System Safety Process (Appendix A).** Defines the system-level hazard-analysis producer per domain and distinguishes it from the software standard this framework supplements. The glossary now contains 84 terms.
+- **§1.2.5 clarified.** AI-1.9 is identified as the framework's single interface requirement to the upstream system safety process — the one required activity conducted outside the software lifecycle the framework overlays; all other requirements remain software-lifecycle activities.
+
+---
+
 ## What's New in v3.4
 
+*(v3.4 was not separately deposited; these changes first publish with the v3.5 release.)*
+
 - **Applicability gate redesigned (§1.2.1, Appendix B.1).** Learned behavior (behavior induced from data through training, fine-tuning, continuous learning, or retrieval augmentation) is now the anchor criterion and is necessary for applicability; probabilistic outputs and potential drift are supporting indicators that refine verification emphasis. Decision impact moved to classification (§1.2.2), where it does its proper work. New **Table 1-2b** gives negative criteria with worked examples of what is *not* AI for framework purposes (deterministic control laws, Kalman filters and classical estimators, fixed rule-based systems, statistical process control, lookup tables), and Appendix B.1 is now a decision sequence with self-contained question numbering.
-- **AI-1.9: AI Hazard Analysis Integration.** New normative requirement: the hazard analysis the host standard already mandates (FMEA, FMECA, FTA, STPA, or PRA) must include the AI system, address the AI-specific failure mode categories in §5.2.2, and trace identified hazards to the requirements and thresholds that mitigate them. Hazard analysis outputs now inform classification and threshold selection.
+- **AI-1.9: AI Hazard Analysis Integration.** New normative requirement: the hazard analysis the project's system safety process already mandates (FMEA, FMECA, FTA, STPA, or PRA; term updated in v3.5) must include the AI system, address the AI-specific failure mode categories in §5.2.2, and trace identified hazards to the requirements and thresholds that mitigate them. Hazard analysis outputs now inform classification and threshold selection.
 - **AI-1.10: Retrieval Corpus Controls.** New normative requirement for retrieval-augmented systems: corpus provenance (per AI-1.3), content screening before admission (per AI-1.5), integrity protection and change control for corpus updates, and protection against corpus poisoning and indirect prompt injection (per AI-7.1/AI-7.2). Documented as Not Applicable where retrieval augmentation is not used.
 - **§4.5: Verification Independence.** Verifier independence now scales with classification: Safety-Critical requires non-developer verification with organizational separation; Mission-Critical requires non-developer verification; Operational Support permits self-verification with independent Software Assurance review.
 - **Classification hardened (§1.2.2).** Classification is anchored to the severity of the worst credible consequence of AI malfunction (drawing on AI-1.9); the more severe classification prevails on conflict, and the determination is approved at the same authority level as the ODD declaration (Table 1-4).
@@ -218,7 +230,7 @@ A full citation list with section-level references appears throughout the framew
 1. **Determine applicability** — Apply the anchor criterion (learned behavior) and supporting indicators in Section 1.2.1, use Table 1-2b to rule out non-AI systems, and record the determination via Appendix B.1 and C.1
 2. **Classify your AI system** — Safety-Critical, Mission-Critical, or Operational Support, anchored to worst-credible-consequence severity and approved per Table 1-4 (Section 1.2.2)
 3. **Define your Operational Design Domain** — Document ODD per Section 1.2.3; this feeds AI-1.0 and sub-requirement scoping
-4. **Integrate AI failure modes into your hazard analysis** — Per AI-1.9, using the Section 5.2 failure mode categories and guidance
+4. **Integrate AI failure modes into your hazard analysis** — Include the AI system in the hazard analysis conducted under your system safety process, per AI-1.9, using the Section 5.2 failure mode categories and guidance
 5. **Identify applicable requirements** — Section 2 (AI-1 through AI-10) plus any Section 3 requirements (AI-11/12/13) that apply based on system architecture and paradigm
 6. **Apply tailoring if needed** — Document rationale per Section 1.2.6
 7. **Define thresholds** — Use Section 5.1 guidance to establish project-specific values, documented and justified per Section 1.5
@@ -230,7 +242,7 @@ A full citation list with section-level references appears throughout the framew
 
 If you use this framework in research, certification work, or derivative publications, please cite:
 
-> Williams, K., & Safety Critical Labs AI Certification Authority. (2026). *AI Requirements Framework for Safety-Critical Systems* (Version 3.4) [Standard]. Zenodo. https://doi.org/10.5281/zenodo.19024420
+> Williams, K., & Safety Critical Labs AI Certification Authority. (2026). *AI Requirements Framework for Safety-Critical Systems* (Version 3.5) [Standard]. Zenodo. https://doi.org/10.5281/zenodo.19024420
 
 ---
 
