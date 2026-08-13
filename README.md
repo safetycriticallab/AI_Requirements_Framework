@@ -1,39 +1,32 @@
-<!-- STAGED FOR v3.5 RELEASE. Do not push to GitHub or update the Zenodo record until the v3.5 deposit is published (held pending the Scientific Reports decision; the concept DOI resolves to the latest version). v3.4 was not separately deposited; its changes publish with v3.5. Canonical copy maintained at Critical Labs/other/README.md. -->
-
+<!-- STAGED FOR v3.6 RELEASE. Publish sequence: deposit v3.6 on Zenodo (the concept DOI resolves to the latest version), then update the GitHub repo (swap in AI_Requirements_Framework_v3_6.pdf, remove v3_5.pdf) and create the v3.6 release/tag. Canonical copy maintained at Critical Labs/other/README.md. -->
 # AI Requirements Framework for Safety-Critical Systems
-
 > Requirements and Verification Standards for Artificial Intelligence in Safety-Critical Applications
-
 **Issuing Authority:** Safety Critical Labs | AI Certification Authority
-**Version:** 3.5 | July 2026
+**Version:** 3.6 | August 2026
 **Status:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19024420.svg)](https://doi.org/10.5281/zenodo.19024420)
-
 > The DOI above is the Concept DOI and always resolves to the most recent deposited version on Zenodo. Each release receives its own version DOI; cite the Concept DOI unless you need to pin a specific version.
-
 ---
-
 ## Overview
-
 This framework establishes the AI-specific requirements and verifications against which Safety Critical Labs conducts certification assessments for systems incorporating artificial intelligence or machine learning capabilities in safety-critical applications.
-
 Traditional software assurance assumes deterministic, logic-based systems with stable post-deployment behavior. AI and ML systems challenge this paradigm through probabilistic outputs, emergent behavior from training data, and potential performance degradation over time. This framework defines requirements and verification methods designed specifically for data-driven systems.
-
 The framework is organized into two tiers. Section 2 contains ten algorithm-agnostic requirement sets (AI-1 through AI-10) that apply across all AI/ML systems regardless of technique. Section 3 contains three architecture- and paradigm-specific requirement sets (AI-11 through AI-13) that apply when systems use multi-model architectures, neural networks, or continuous learning. Requirements are defined by the failures they prevent, carry co-located verifications with success criteria, and trace to a verification matrix with defined cadence and classification-scaled verifier independence. The framework applies across aerospace, aviation, automotive, medical, and other safety-critical domains.
-
 ---
-
+## What's New in v3.6
+- **Applicability gate finalized (§1.2.1, Appendix B.1, Appendix C.1).** The anchor criterion is now stated as a two-arm discriminator built on the defined term *learned artifact*: a system is outside scope only when its correctness can be fully verified against written specification by established methods, with no residual reliance on fidelity to any learned artifact; it is within scope when correctness at the system's decision points can only be established empirically. The mechanism list (training, fine-tuning, continuous learning, retrieval augmentation) is illustrative, not load-bearing.
+- **Deletion test now normative (Appendix B.1).** Delete every value derived from data — or designed to be derived from data during operation; if fully specified behavior remains, the system is not AI for framework purposes. Two provisos govern edge cases: runtime-generated parameters count as specified behavior only where established analysis bounds the correctness of the resulting behavior (an adaptive Kalman filter passes on this basis; the analysis must bound behavior, not merely optimization convergence), and a documented derivation must constitute a correctness argument (training pipelines do not qualify). The test was validated against a seven-case battery recorded in the change log.
+- **Determination boundary and coverage condition (Appendix B.1).** Each applicability determination now declares its unit of analysis — the *determination boundary*, adapted from the EASA AI/ML constituent concept — with a propagation rule (the boundary attaches to learned components and the artifacts their fidelity depends on, and ends at declared interfaces) and an anti-gerrymandering coverage condition: the declaration names the encompassing system, enumerates every candidate learned component, every candidate must lie within a declared boundary, and negative determinations discharge only their own boundary. The Appendix C.1 record now captures the boundary declaration, the enumeration claim, and per-test outcomes including any proviso invoked.
+- **Learned vs. learning made timing-neutral.** "Learned" is a property of how behavior is determined — induced from data without a correctness-argument derivation — not a status conferred when training ends. A continuously-learning system is a learned artifact at every moment of operation; the applicability gate treats frozen and continuously-updating models identically, and they diverge downstream at AI-13.
+- **New glossary entries: Learned Artifact and Learned Component (Appendix A).** Both grounded in ISO/IEC 22989:2022 (3.3.5, 3.3.10, 3.1.9, 3.3.14). The glossary now contains 86 terms.
+- **Table 1-2b extended.** New negative-criteria rows for Monte Carlo and dispersion-analysis tools and for systems with data-fitted parameters (adjudicated under the deletion-test provisos); the classical-estimators row now routes adaptive variants through the data-fitted analysis.
+- **ISO/IEC 22989 citations source-verified.** All Appendix A citations to ISO/IEC 22989:2022 were checked against the standard; two corrected (Parameter, 3.3.8; Artificial Intelligence, adapted from 3.1.4).
+- **References.** EASA Artificial Intelligence Concept Paper Issue 2 added to the informative references (Table 1-10); SAE ARP6983 and EUROCAE ED-324 added to the §1.3.3 verification-status list pending verification against final published text.
+---
 ## What's New in v3.5
-
 - **AI-1.9 pointer corrected: "host standard" replaced with *system safety process*.** The hazard-analysis requirement previously invoked "the applicable host standard" — an undefined term that resolved to the software standard the framework overlays (DO-178C, NPR 7150.2D, ISO 26262-6). Those standards *consume* hazard-analysis outputs to determine software criticality; they do not conduct the analysis. The requirement, rationale, and verification now name the project's **system safety process**: the system-level process that actually produces the hazard analysis (e.g., SAE ARP4754/ARP4761 safety assessment in civil aviation, ISO 26262-3 hazard analysis and risk assessment, ISO 14971 risk management for medical devices, MIL-STD-882E system safety, or the NASA safety program's hazard analysis process, from which NASA-STD-8739.8 derives software safety criticality). The accepted analysis methods are unchanged (FMEA, FMECA, FTA, STPA, or PRA per applicable domain practice).
-- **New glossary entry: System Safety Process (Appendix A).** Defines the system-level hazard-analysis producer per domain and distinguishes it from the software standard this framework supplements. The glossary now contains 84 terms.
+- **New glossary entry: System Safety Process (Appendix A).** Defines the system-level hazard-analysis producer per domain and distinguishes it from the software standard this framework supplements.
 - **§1.2.5 clarified.** AI-1.9 is identified as the framework's single interface requirement to the upstream system safety process — the one required activity conducted outside the software lifecycle the framework overlays; all other requirements remain software-lifecycle activities.
-
 ---
-
 ## What's New in v3.4
-
-*(v3.4 was not separately deposited; these changes first publish with the v3.5 release.)*
-
 - **Applicability gate redesigned (§1.2.1, Appendix B.1).** Learned behavior (behavior induced from data through training, fine-tuning, continuous learning, or retrieval augmentation) is now the anchor criterion and is necessary for applicability; probabilistic outputs and potential drift are supporting indicators that refine verification emphasis. Decision impact moved to classification (§1.2.2), where it does its proper work. New **Table 1-2b** gives negative criteria with worked examples of what is *not* AI for framework purposes (deterministic control laws, Kalman filters and classical estimators, fixed rule-based systems, statistical process control, lookup tables), and Appendix B.1 is now a decision sequence with self-contained question numbering.
 - **AI-1.9: AI Hazard Analysis Integration.** New normative requirement: the hazard analysis the project's system safety process already mandates (FMEA, FMECA, FTA, STPA, or PRA; term updated in v3.5) must include the AI system, address the AI-specific failure mode categories in §5.2.2, and trace identified hazards to the requirements and thresholds that mitigate them. Hazard analysis outputs now inform classification and threshold selection.
 - **AI-1.10: Retrieval Corpus Controls.** New normative requirement for retrieval-augmented systems: corpus provenance (per AI-1.3), content screening before admission (per AI-1.5), integrity protection and change control for corpus updates, and protection against corpus poisoning and indirect prompt injection (per AI-7.1/AI-7.2). Documented as Not Applicable where retrieval augmentation is not used.
@@ -43,35 +36,22 @@ The framework is organized into two tiers. Section 2 contains ten algorithm-agno
 - **Prompt injection coverage (AI-7.2).** Adversarial input protection now explicitly covers direct and indirect prompt injection for generative and retrieval-augmented systems, with OWASP LLM Top 10 and MITRE ATLAS citations.
 - **Statistical ML coverage (AI-12.2, AI-12.4).** Confidence calibration and training integrity now additionally apply to non-neural statistical ML models (gradient-boosted trees, random forests, support vector machines), which exhibit the same miscalibration and overfitting failure modes.
 - **Consistency and correctness pass.** Bias requirements reworded to what is actually verified (AI-2.1 Bias-Bounded Baseline Performance, AI-2.2 Bias-Managed Training Data); AI-2.3 scope corrected to include Safety-Critical decisions; defined-fallback response paths added to AI-2.11 and AI-5.3 for approved-autonomy and disconnected operations; the Demonstration method is now assigned in the verification matrix (AI-8.2, AI-9.3); logging and calibration verification cadences aligned; miswired cross-references corrected; Table 1-7 gains a Retirement lifecycle phase; UL 4600 added to references; AI-1.5 through AI-1.8 gain explicit Not Applicable provisions; ODD attribute coverage in AI-1.0 now scales with classification per Table 1-4.
-
 ### Earlier releases
-
 v3.1 through v3.3 were editorial and consistency revisions (uniform verification format across AI-1 through AI-13, corrected verification-method definitions, IEEE 1012-2024 citation). v3.0 was the major structural revision that introduced the two-tier structure and the Section 3 Architecture and Paradigm Requirements (AI-11 Multi-Model Systems, AI-12 Neural Networks, AI-13 Continuous Learning and Adaptation), renumbered Verification to Section 4 and Implementation Patterns to Section 5, and added the §1.3.2 Source Traceability Typology and §1.3.3 Verification Status of Cited References. The full revision history appears at the end of the framework document.
-
 ---
-
 ## AI System Classification
-
 Systems are classified based on their impact on safety and operations, which determines applicable requirements and tailoring authority. Classification is anchored to the severity of the worst credible consequence of AI system malfunction, informed by the hazard analysis (AI-1.9), and is approved at the authority level defined in Table 1-4.
-
 | Classification | Description | Applicable Requirements |
 |---|---|---|
 | **Safety-Critical AI** | AI outputs directly affect human safety or system survivability | All AI-1 through AI-10 (no tailoring without Project Safety Review Board approval); plus AI-11 if multi-model, AI-12 if neural network, AI-13 if continuous learning |
 | **Mission-Critical AI** | AI outputs affect operational success but not human safety | AI-1 through AI-6, AI-8, AI-9, AI-10 (tailoring permitted with Chief Engineer approval); AI-7 tailored; plus AI-11 / AI-12 / AI-13 conditionally per system design |
 | **Operational Support AI** | AI supports operations but does not drive critical decisions | AI-1 through AI-6 and AI-10 minimum; AI-7, AI-8, AI-9 as tailored; plus AI-11 / AI-12 / AI-13 conditionally per system design |
-
 > AI-12.2 (Confidence Calibration) and AI-12.4 (Training Integrity) additionally apply to systems built on non-neural statistical ML models.
-
 ---
-
 ## Requirement Sets
-
 The framework defines thirteen AI-specific requirement sets organized into two tiers.
-
 ### Section 2 — Algorithm-Agnostic Requirements
-
 Apply to all AI/ML systems regardless of architecture or technique.
-
 | Req Set | Title | Gap Addressed |
 |---|---|---|
 | **AI-1** | Operational and Data Foundations | Operational Design Domain definition; training data integrity, separation, and traceability; hazard analysis integration; retrieval corpus controls |
@@ -84,41 +64,30 @@ Apply to all AI/ML systems regardless of architecture or technique.
 | **AI-8** | Explainability | Black-box decision-making; transparency for operators, regulators, and the public |
 | **AI-9** | Human-AI Teaming | Operators cannot verify AI reasoning; qualification, workload, and training gaps |
 | **AI-10** | Privacy and Data Protection | Personal-data handling, consent, subject rights, and cross-border transfer |
-
 ### Section 3 — Architecture and Paradigm Requirements
-
 Apply when the corresponding architecture or paradigm is used.
-
 | Req Set | Title | Applies When |
 |---|---|---|
 | **AI-11** | Multi-Model Systems Requirements | System composes two or more AI models (cascades, ensembles, coordinated architectures) |
 | **AI-12** | Neural Network Requirements | System uses neural-network architectures, including deep learning and generative models (AI-12.2 and AI-12.4 also apply to other statistical ML models) |
 | **AI-13** | Continuous Learning and Adaptation Requirements | System updates model parameters during operation (incremental, continual, or lifelong learning) |
-
 ---
-
 ## Verification
-
 Verification uses standard IEEE 1012 methods tailored for AI and ML systems:
-
 | Method | AI Application |
 |---|---|
 | **Inspection** | Dataset documentation, provenance records, log schemas, disclosure artifacts |
 | **Analysis** | Bias risk assessment, coverage analysis, distribution characterization, hazard traceability |
 | **Demonstration** | Operator comprehension, human-AI interaction evaluation, trust calibration |
 | **Test** | Drift detection, OOD detection, hallucination detection, adversarial-input resilience, deployment-format equivalence |
-
 Each requirement includes co-located verification criteria and success criteria. The verification matrix in Section 4.2 provides full traceability from each [R.AI-X.Y] to its verification method, evidence artifact, and cadence (one-time, periodic, or continuous). Section 4.4 consolidates the continuous and periodic verification obligations for deployed systems, and Section 4.5 establishes verifier independence scaled by classification.
-
 ---
-
 ## Document Structure
-
 ```
 Section 1: Introduction
   1.1  Purpose
   1.2  Scope and Applicability
-       1.2.1  Defining AI (anchor criterion, supporting indicators, negative criteria)
+       1.2.1  Defining AI (anchor criterion, deletion test, supporting indicators, negative criteria)
        1.2.2  AI System Classification
        1.2.3  Operational Design Domain
        1.2.4  Relationship to Traditional Software Standards
@@ -132,7 +101,6 @@ Section 1: Introduction
        1.3.3  Verification Status of Cited References
   1.4  Verb Application and Lexicon
   1.5  Threshold Category Definitions
-
 Section 2: Requirements (Algorithm-Agnostic)
   2.1   AI-1: Operational and Data Foundations (incl. ODD, hazard analysis, retrieval corpora)
   2.2   AI-2: Addressing AI Bias
@@ -144,12 +112,10 @@ Section 2: Requirements (Algorithm-Agnostic)
   2.8   AI-8: Explainability
   2.9   AI-9: Human-AI Teaming
   2.10  AI-10: Privacy and Data Protection
-
 Section 3: Architecture and Paradigm Requirements
   3.1  AI-11: Multi-Model Systems Requirements
   3.2  AI-12: Neural Network Requirements
   3.3  AI-13: Continuous Learning and Adaptation Requirements
-
 Section 4: Verification
   4.0  Overview
   4.1  Verification Methods
@@ -157,27 +123,20 @@ Section 4: Verification
   4.3  Deployment Format Validation
   4.4  Continuous and Periodic Verification
   4.5  Verification Independence
-
 Section 5: Implementation Patterns
   5.1  Threshold Selection Guidance
   5.2  AI-Specific Hazard Analysis Integration
   5.3  Human-AI Teaming Implementation Guidance
   5.4  Privacy and Data Protection Implementation Guidance
-
 Appendix A: Glossary (aligned with ISO/IEC 22989:2022, ISO/IEC 5338:2023)
-Appendix B: AI Classification Checklist
-Appendix C: Verification Evidence Templates
+Appendix B: AI Classification Checklist (incl. B.1 AI Presence Determination)
+Appendix C: Verification Evidence Templates (incl. C.1 AI Applicability Determination Record)
 Appendix D: Risk Score Methodology
-
 Document Revision History
 ```
-
 ---
-
 ## Normative and Applicable Domain References
-
 Cross-domain and general:
-
 | Document | Title |
 |---|---|
 | ISO/IEC 22989:2022 | Artificial Intelligence — Concepts and Terminology |
@@ -197,13 +156,12 @@ Cross-domain and general:
 | NIST SP 800-53 Rev. 5 | Security and Privacy Controls |
 | NIST SP 800-218A | Secure Software Development Practices for Generative AI |
 | IEEE 1012-2024 | System, Software, and Hardware Verification and Validation |
-
 Domain-specific:
-
 | Domain | Document | Title |
 |---|---|---|
 | Aviation | RTCA DO-178C / DO-326A / DO-330 / DO-355 / DO-356A | Airborne software, security process, tool qualification, information security |
-| Aviation | EUROCAE ED-324 / SAE ARP6983 | AI/ML aviation development and certification (Q1 2026) |
+| Aviation | EUROCAE ED-324 / SAE ARP6983 | AI/ML aviation development and certification (2026; verification status per §1.3.3) |
+| Aviation | EASA AI Concept Paper Issue 2 | Guidance for Level 1 & 2 Machine Learning Applications (informative) |
 | Aviation | SAE ARP4761 | Safety assessment process for civil airborne systems |
 | Aviation | FAA AI Safety Roadmap | FAA aviation AI safety vision |
 | Aviation | 14 CFR 25.1302; 14 CFR 121 Subparts N, Y | Flight crew interfaces; qualification and training |
@@ -220,14 +178,10 @@ Domain-specific:
 | Defense / Aerospace | MIL-STD-882E; NASA-STD-8739.8 | System safety; software assurance and safety analysis |
 | Regulatory | EU AI Act (Reg. 2024/1689) | High-risk AI obligations (Articles 9, 10, 13, 14, 15, 17, 26, 50, 71, 72) |
 | Regulatory | GDPR (Reg. 2016/679); HIPAA; CCPA/CPRA | Personal data protection regimes |
-
 A full citation list with section-level references appears throughout the framework as **Applicable Domain Standards** blocks under each requirement. See §1.3.3 for the verification status of cited references.
-
 ---
-
 ## Getting Started
-
-1. **Determine applicability** — Apply the anchor criterion (learned behavior) and supporting indicators in Section 1.2.1, use Table 1-2b to rule out non-AI systems, and record the determination via Appendix B.1 and C.1
+1. **Determine applicability** — Declare the determination boundary, apply the anchor criterion and deletion test in Section 1.2.1 and Appendix B.1, use Table 1-2b to rule out non-AI systems, and record the determination via Appendix C.1
 2. **Classify your AI system** — Safety-Critical, Mission-Critical, or Operational Support, anchored to worst-credible-consequence severity and approved per Table 1-4 (Section 1.2.2)
 3. **Define your Operational Design Domain** — Document ODD per Section 1.2.3; this feeds AI-1.0 and sub-requirement scoping
 4. **Integrate AI failure modes into your hazard analysis** — Include the AI system in the hazard analysis conducted under your system safety process, per AI-1.9, using the Section 5.2 failure mode categories and guidance
@@ -235,24 +189,14 @@ A full citation list with section-level references appears throughout the framew
 6. **Apply tailoring if needed** — Document rationale per Section 1.2.6
 7. **Define thresholds** — Use Section 5.1 guidance to establish project-specific values, documented and justified per Section 1.5
 8. **Execute verification** — Use the verification matrix (Section 4.2), the cadence obligations (Section 4.4), the independence requirements (Section 4.5), and the evidence templates in Appendix C
-
 ---
-
 ## Citation
-
 If you use this framework in research, certification work, or derivative publications, please cite:
-
-> Williams, K., & Safety Critical Labs AI Certification Authority. (2026). *AI Requirements Framework for Safety-Critical Systems* (Version 3.5) [Standard]. Zenodo. https://doi.org/10.5281/zenodo.19024420
-
+> Williams, K., & Safety Critical Labs AI Certification Authority. (2026). *AI Requirements Framework for Safety-Critical Systems* (Version 3.6) [Standard]. Zenodo. https://doi.org/10.5281/zenodo.19024420
 ---
-
 ## License
-
 Creative Commons Attribution-Share Alike 4.0 International (CC BY-SA 4.0)
-
 ---
-
 ## Contact
-
 kevin.williams@safetycriticallabs.com
 [safetycriticallabs.com](https://safetycriticallabs.com)
